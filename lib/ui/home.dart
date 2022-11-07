@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 import 'package:redux_counter_and_other/redux/app_state.dart';
 import 'package:redux_counter_and_other/redux/counter/counter_actions.dart';
+import 'package:redux_counter_and_other/redux/theme/theme_actions.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
@@ -13,6 +15,17 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
+        actions: [
+          StoreConnector<AppState, Store<AppState>>(
+              converter: (store) => store,
+              builder: (context, store) {
+                return IconButton(
+                    onPressed: () => store.dispatch(ChangeThemeAction()),
+                    icon: Icon(store.state.theme.brightness == Brightness.light
+                        ? Icons.sunny
+                        : Icons.nightlight_round));
+              }),
+        ],
       ),
       body: Center(
         child: Column(
