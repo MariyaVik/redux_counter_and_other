@@ -4,6 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_counter_and_other/redux/app_state.dart';
 import 'package:redux_counter_and_other/redux/counter/counter_actions.dart';
 import 'package:redux_counter_and_other/redux/theme/theme_actions.dart';
+import 'package:redux_counter_and_other/ui/navigation.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
@@ -25,6 +26,11 @@ class MyHomePage extends StatelessWidget {
                         ? Icons.sunny
                         : Icons.nightlight_round));
               }),
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(NavRouteName.users);
+              },
+              icon: const Icon(Icons.people)),
         ],
       ),
       body: Center(
@@ -48,11 +54,13 @@ class MyHomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: null,
             onPressed: () => StoreProvider.of<AppState>(context)
                 .dispatch(CounterIncreamentAction()),
             child: const Icon(Icons.add),
           ),
           FloatingActionButton(
+            heroTag: null,
             onPressed: () => StoreProvider.of<AppState>(context)
                 .dispatch(CounterDecreamentAction()),
             child: const Icon(Icons.remove),
